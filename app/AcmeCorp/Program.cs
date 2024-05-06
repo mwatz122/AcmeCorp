@@ -1,20 +1,30 @@
+using AcmeCorp.Database;
+using AcmeCorp.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddRouting(x => x.LowercaseUrls = true);
+builder.Services.AddDbContext<AcmeCorpContext>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+
+// Ensure database has been created
+using (var context = new AcmeCorpContext())
+{
+    context.Database.EnsureCreated();
+}
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

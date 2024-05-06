@@ -1,6 +1,0 @@
-@AcmeCorp_HostAddress = http://localhost:5201
-
-GET {{AcmeCorp_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
