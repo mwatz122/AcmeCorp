@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AcmeCorp.Database
 {
@@ -15,6 +14,10 @@ namespace AcmeCorp.Database
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Environment.GetFolderPath(folder);
             DbPath = Path.Join(path, "acme_corp.db");
+        }
+
+        public AcmeCorpContext(DbContextOptions<AcmeCorpContext> options) : base(options)
+        {
         }
 
         // The following configures EF to create a Sqlite database file in the
